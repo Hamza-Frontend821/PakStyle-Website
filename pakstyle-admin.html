@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pak Style — Admin Panel</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --blue: #2196F3;
+      --blue-mid: #42A5F5;
+      --blue-pale: #E3F2FD;
+      --blue-sky: #BBDEFB;
+      --cyan: #00BCD4;
+      --cyan-l: #80DEEA;
+      --navy: #0D1B2A;
+      --navy-l: #152638;
+      --navy-m: #1E3A52;
+      --white: #fff;
+      --off: #F0F7FF;
+      --gl: #E8F4FE;
+      --green: #4CAF50;
+      --green-p: #E8F5E9;
+      --green-d: #388E3C;
+      --orange: #FF9800;
+      --orange-p: #FFF3E0;
+      --red: #F44336;
+      --red-p: #FFEBEE;
+      --purple: #9C27B0;
+      --purple-p: #F3E5F5;
+      --text: #0D2137;
+      --txt-m: #2A5077;
+      --txt-s: #5B82A0;
+      --sh-sm: 0 4px 16px rgba(33, 150, 243, .12);
+      --sh-md: 0 8px 32px rgba(33, 150, 243, .18);
+      --sh-3d: 0 8px 0 rgba(33, 150, 243, .16), 0 16px 40px rgba(33, 150, 243, .18);
+      --glow: 0 0 28px rgba(33, 150, 243, .35);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--off);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--blue-pale);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--blue-mid);
+      border-radius: 6px;
+    }
+
+    /* LOGIN */
+    #loginScreen {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 60% 40%, rgba(33, 150, 243, .2), transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(0, 188, 212, .15), transparent 55%), linear-gradient(160deg, #E8F7FF, #F0FAFF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lcard {
+      background: #fff;
+      border-radius: 28px;
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: var(--sh-3d);
+      border: 1.5px solid rgba(33, 150, 243, .12);
+      animation: slideUp .4s cubic-bezier(.34, 1.3, .64, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .llogo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .llogo .li {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: var(--sh-3d);
+    }
+
+    .llogo h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lsub {
+      color: var(--txt-s);
+      font-size: .9rem;
+      margin-bottom: 32px;
+      padding-left: 58px;
+    }
+
+    .lgrp {
+      margin-bottom: 16px;
+    }
+
+    .lgrp label {
+      display: block;
+      font-size: .76rem;
+      font-weight: 800;
+      color: var(--txt-s);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .lgrp input {
+      width: 100%;
+      background: var(--off);
+      border: 2px solid var(--blue-sky);
+      border-radius: 13px;
+      padding: 12px 16px;
+      font-size: .94rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: all .2s;
+    }
+
+    .lgrp input:focus {
+      border-color: var(--blue);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(33, 150, 243, .1);
+    }
+
+    .lbtn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      padding: 14px;
+      font-size: .97rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 7px 0 rgba(0, 131, 188, .38), var(--sh-md);
+      transform: perspective(300px) rotateX(6deg);
+      transition: all .22s;
+    }
+
+    .lbtn:hover {
+      transform: perspective(300px) rotateX(0deg) translateY(-4px);
+      box-shadow: 0 11px 0 rgba(0, 131, 188, .35), var(--glow);
+    }
+
+    .lerr {
+      display: none;
+      background: #FFEBEE;
+      border: 1.5px solid #FFCDD2;
+      color: #C62828;
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: .83rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .lhint {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--txt-s);
+      margin-top: 18px;
+    }
+
+    .lhint strong {
+      color: var(--blue);
+    }
+
+    /* LAYOUT */
+    #adminApp {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .alayout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 258px;
+      background: var(--navy);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, .3);
+      transition: width .3s;
+    }
+
+    .sb-logo {
+      padding: 26px 22px 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .sb-logo .li {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 0 rgba(0, 131, 188, .35);
+    }
+
+    .sb-logo h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .sb-logo span {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .35);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .sb-nav {
+      padding: 18px 14px;
+      flex: 1;
+    }
+
+    .sb-sec {
+      font-size: .66rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, .22);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 14px 8px 7px;
+    }
+
+    .sb-link {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 13px;
+      border-radius: 13px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, .52);
+      font-size: .87rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      transition: all .22s;
+      white-space: nowrap;
+    }
+
+    .sb-link:hover {
+      background: rgba(255, 255, 255, .07);
+      color: #fff;
+    }
+
+    .sb-link.active {
+      background: linear-gradient(135deg, rgba(33, 150, 243, .28), rgba(0, 188, 212, .16));
+      color: #fff;
+      box-shadow: inset 2px 0 0 var(--blue);
+    }
+
+    .sb-link .si {
+      font-size: 1.15rem;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sb-badge {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      border-radius: 20px;
+      padding: 2px 8px;
+      font-size: .66rem;
+      font-weight: 800;
+      margin-left: auto;
+    }
+
+    .sb-bot {
+      padding: 14px;
+      border-top: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .sb-user {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 13px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .04);
+      margin-bottom: 8px;
+    }
+
+    .sb-av {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .sb-un {
+      font-size: .83rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sb-ur {
+      font-size: .7rem;
+      color: rgba(255, 255, 255, .32);
+    }
+
+    .logout-btn {
+      width: 100%;
+      background: rgba(244, 67, 54, .1);
+      border: 1.5px solid rgba(244, 67, 54, .22);
+      color: #EF9A9A;
+      border-radius: 11px;
+      padding: 9px;
+      font-size: .81rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .logout-btn:hover {
+      background: rgba(244, 67, 54, .2);
+      color: #FFCDD2;
+    }
+
+    /* MAIN */
+    .main-area {
+      margin-left: 258px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1.5px solid rgba(33, 150, 243, .12);
+      padding: 0 30px;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      box-shadow: 0 4px 16px rgba(33, 150, 243, .07);
+    }
+
+    .topbar h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .tb-r {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tb-date {
+      font-size: .8rem;
+      color: var(--txt-s);
+    }
+
+    .tb-btn {
+      background: var(--blue-pale);
+      border: 1.5px solid var(--blue-sky);
+      color: var(--blue);
+      border-radius: 11px;
+      padding: 7px 15px;
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+
+    .tb-btn:hover {
+      background: var(--blue);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .content {
+      padding: 26px 30px;
+      flex: 1;
+    }
+
+    /* PAGES */
+    .apg {
+      display: none;
+      animation: pgIn .32s ease;
+    }
+
+    .apg.active {
+      display: block;
+    }
+
+    @keyframes pgIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* STATS */
+    .sg {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .sc {
+      background: #fff;
+      border-radius: 19px;
+      padding: 20px 22px;
+      box-shadow: var(--sh-sm);
+      border: 1.5px solid rgba(33, 150, 243, .07);
+      transform: perspective(600px) rotateX(4deg);
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .sc:hover {
+      transform: perspective(600px) rotateX(0deg) translateY(-5px);
+      box-shadow: var(--sh-md);
+    }
+
+    .sc::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      opacity: .06;
+      transform: translate(20px, -20px);
+    }
+
+    .sc.bl::after {
+      background: var(--blue);
+    }
+
+    .sc.gr::after {
+      background: var(--green);
+    }
+
+    .sc.or::after {
+      background: var(--orange);
+    }
+
+    .sc.pu::after {
+      background: var(--purple);
+    }
+
+    .sc-ico {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin-bottom: 13px;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, .1);
+    }
+
+    .sc-ico.bl {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+    }
+
+    .sc-ico.gr {
+      background: linear-gradient(135deg, var(--green), #66BB6A);
+    }
+
+    .sc-ico.or {
+      background: linear-gradient(135deg, var(--orange), #FFB74D);
+    }
+
+    .sc-ico.pu {
+      background: linear-gradient(135deg, var(--purple), #BA68C8);
+    }
+
+    .sc-v {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+
+    .sc-l {
+      font-size: .8rem;
+      color: var(--txt-s);
+      font-weight: 600;
+    }
+
+    .sc-ch {
+      font-size: .73rem;
+      font-weight: 700;
+      margin-top: 5px;
+      color: var(--green);
+    }
+
+    /* CARD */
+    .card {
+      background: #fff;
+      border-radius: 19px;
+      padding: 22px;
+      box-shadow: var(--sh-sm);
+      border: 1.5px solid rgba(33, 150, 243, .07);
+    }
+
+    .card-hd {
+      font-family: 'Sora', sans-serif;
+      font-size: .97rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-hd a {
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--blue);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* DASH GRIDS */
+    .dg2 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .dg3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.1fr;
+      gap: 18px;
+    }
+
+    /* CHART */
+    .chart-wrap {
+      overflow-x: auto;
+    }
+
+    .chart-svg {
+      min-width: 100%;
+      height: 170px;
+    }
+
+    /* STATUS RING */
+    .sr-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 9px;
+    }
+
+    .sr-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .sr-bw {
+      flex: 1;
+      background: var(--gl);
+      border-radius: 10px;
+      height: 7px;
+      overflow: hidden;
+    }
+
+    .sr-b {
+      height: 100%;
+      border-radius: 10px;
+      transition: width .6s ease;
+    }
+
+    .sr-l {
+      font-size: .76rem;
+      font-weight: 700;
+      color: var(--txt-m);
+      width: 68px;
+    }
+
+    .sr-v {
+      font-size: .76rem;
+      font-weight: 800;
+      color: var(--text);
+      width: 28px;
+      text-align: right;
+    }
+
+    /* TABLE */
+    .tbl-wrap {
+      overflow-x: auto;
+    }
+
+    table.dt {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .dt th {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--txt-s);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 10px 13px;
+      border-bottom: 2px solid var(--gl);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .dt td {
+      padding: 12px 13px;
+      font-size: .85rem;
+      border-bottom: 1px solid var(--gl);
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .dt tr:last-child td {
+      border-bottom: none;
+    }
+
+    .dt tr:hover td {
+      background: var(--off);
+    }
+
+    .dt tr.click:hover {
+      cursor: pointer;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .4px;
+    }
+
+    .badge.pending {
+      background: var(--orange-p);
+      color: var(--orange);
+    }
+
+    .badge.confirmed {
+      background: var(--blue-pale);
+      color: var(--blue);
+    }
+
+    .badge.shipped {
+      background: var(--purple-p);
+      color: var(--purple);
+    }
+
+    .badge.delivered {
+      background: var(--green-p);
+      color: var(--green-d);
+    }
+
+    .badge.cancelled {
+      background: var(--red-p);
+      color: var(--red);
+    }
+
+    .badge.clothing {
+      background: #E3F2FD;
+      color: #1565C0;
+    }
+
+    .badge.beauty {
+      background: #E0F7FA;
+      color: #006064;
+    }
+
+    .badge.perfumes {
+      background: #E8EAF6;
+      color: #283593;
+    }
+
+    /* PAGE HD */
+    .phd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .phd h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .phd p {
+      font-size: .83rem;
+      color: var(--txt-s);
+      margin-top: 2px;
+    }
+
+    /* BTNs */
+    .btn-add {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-size: .83rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 5px 0 rgba(0, 131, 188, .35);
+      transform: perspective(200px) rotateX(6deg);
+      transition: all .22s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-add:hover {
+      transform: perspective(200px) rotateX(0deg) translateY(-3px);
+      box-shadow: 0 8px 0 rgba(0, 131, 188, .3), var(--glow);
+    }
+
+    .btn-sm {
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: .73rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .17s;
+      border: none;
+    }
+
+    .btn-e {
+      background: var(--blue-pale);
+      color: var(--blue);
+      border: 1px solid var(--blue-sky);
+    }
+
+    .btn-e:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-d {
+      background: var(--red-p);
+      color: var(--red);
+      border: 1px solid #FFCDD2;
+    }
+
+    .btn-d:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-v {
+      background: var(--green-p);
+      color: var(--green-d);
+      border: 1px solid #C8E6C9;
+    }
+
+    .btn-v:hover {
+      background: var(--green);
+      color: #fff;
+    }
+
+    /* CONTROLS */
+    .tctrl {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .sbox {
+      background: #fff;
+      border: 2px solid var(--blue-sky);
+      border-radius: 30px;
+      padding: 8px 17px;
+      font-size: .83rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      outline: none;
+      width: 230px;
+      transition: all .2s;
+    }
+
+    .sbox:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, .1);
+    }
+
+    .ftabs {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .ftab {
+      padding: 7px 15px;
+      border-radius: 20px;
+      font-size: .76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .17s;
+      border: 2px solid var(--blue-sky);
+      background: #fff;
+      color: var(--txt-m);
+    }
+
+    .ftab.active,
+    .ftab:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    /* PRODUCT IMG IN TABLE */
+    .pi-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid var(--blue-sky);
+      background: var(--blue-pale);
+    }
+
+    .pi-placeholder {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--blue-pale);
+      border: 1.5px solid var(--blue-sky);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    /* MODAL */
+    .mov {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(13, 33, 55, .55);
+      backdrop-filter: blur(6px);
+      align-items: flex-start;
+      justify-content: center;
+      padding: 30px 20px;
+      overflow-y: auto;
+    }
+
+    .mov.open {
+      display: flex;
+    }
+
+    .mbox {
+      background: #fff;
+      border-radius: 22px;
+      width: 100%;
+      max-width: 680px;
+      box-shadow: 0 40px 80px rgba(13, 33, 55, .28);
+      animation: msl .35s cubic-bezier(.34, 1.3, .64, 1);
+      border: 1.5px solid rgba(33, 150, 243, .12);
+      margin: auto;
+    }
+
+    @keyframes msl {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .mhd {
+      background: linear-gradient(135deg, var(--navy), var(--navy-m));
+      padding: 22px 26px;
+      border-radius: 22px 22px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mhd h2 {
+      font-family: 'Sora', sans-serif;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .mcl {
+      background: rgba(255, 255, 255, .14);
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 5px 11px;
+      border-radius: 9px;
+      transition: all .2s;
+    }
+
+    .mcl:hover {
+      background: rgba(255, 255, 255, .26);
+      transform: rotate(90deg);
+    }
+
+    .mbdy {
+      padding: 26px;
+    }
+
+    .frow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .fgrp {
+      margin-bottom: 13px;
+    }
+
+    .fgrp label {
+      display: block;
+      font-size: .74rem;
+      font-weight: 800;
+      color: var(--txt-s);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .fgrp input,
+    .fgrp select,
+    .fgrp textarea {
+      width: 100%;
+      background: var(--off);
+      border: 2px solid var(--blue-sky);
+      border-radius: 11px;
+      padding: 10px 13px;
+      font-size: .87rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: all .2s;
+    }
+
+    .fgrp input:focus,
+    .fgrp select:focus,
+    .fgrp textarea:focus {
+      border-color: var(--blue);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, .1);
+    }
+
+    .fgrp textarea {
+      resize: vertical;
+      min-height: 76px;
+    }
+
+    .mft {
+      display: flex;
+      gap: 9px;
+      justify-content: flex-end;
+      padding: 0 26px 26px;
+    }
+
+    .mbtn-c {
+      background: #fff;
+      border: 2px solid var(--blue-sky);
+      color: var(--txt-m);
+      border-radius: 18px;
+      padding: 9px 20px;
+      font-size: .83rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .mbtn-c:hover {
+      background: var(--gl);
+    }
+
+    .mbtn-s {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      padding: 9px 24px;
+      font-size: .83rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 rgba(0, 131, 188, .35);
+      transition: all .22s;
+    }
+
+    .mbtn-s:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 rgba(0, 131, 188, .3), var(--glow);
+    }
+
+    .mbtn-d {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      padding: 9px 20px;
+      font-size: .83rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 rgba(198, 40, 40, .35);
+      transition: all .22s;
+    }
+
+    .mbtn-d:hover {
+      transform: translateY(-2px);
+    }
+
+    /* IMAGE UPLOAD */
+    .img-upload-area {
+      border: 2px dashed var(--blue-sky);
+      border-radius: 14px;
+      padding: 20px;
+      background: var(--off);
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+      position: relative;
+    }
+
+    .img-upload-area:hover {
+      border-color: var(--blue);
+      background: var(--blue-pale);
+    }
+
+    .img-upload-area input[type=file] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .img-upload-area p {
+      color: var(--txt-s);
+      font-size: .83rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .img-upload-area .ui {
+      font-size: 2rem;
+    }
+
+    .img-previews {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .img-prev {
+      position: relative;
+      border-radius: 11px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: var(--gl);
+      border: 1.5px solid var(--blue-sky);
+    }
+
+    .img-prev img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .img-prev .rm-img {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(244, 67, 54, .9);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: .75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+
+    .img-prev .rm-img:hover {
+      background: var(--red);
+      transform: scale(1.15);
+    }
+
+    .img-prev .main-tag {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      background: rgba(33, 150, 243, .9);
+      color: #fff;
+      font-size: .6rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    /* ORDER DETAIL */
+    .odg {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .osect {
+      background: var(--off);
+      border-radius: 13px;
+      padding: 15px 17px;
+    }
+
+    .osect h4 {
+      font-size: .7rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+
+    .orow {
+      display: flex;
+      gap: 7px;
+      font-size: .83rem;
+      padding: 3px 0;
+    }
+
+    .orow span:first-child {
+      color: var(--txt-s);
+      font-weight: 600;
+      min-width: 96px;
+    }
+
+    .orow span:last-child {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .oi-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--gl);
+    }
+
+    .oi-row:last-child {
+      border-bottom: none;
+    }
+
+    .oi-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      object-fit: cover;
+      border: 1.5px solid var(--blue-sky);
+      background: var(--blue-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .oi-name {
+      flex: 1;
+      font-size: .83rem;
+      font-weight: 600;
+    }
+
+    .oi-qty {
+      font-size: .76rem;
+      color: var(--txt-s);
+    }
+
+    .oi-price {
+      font-size: .86rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    .otot {
+      background: linear-gradient(135deg, var(--navy), var(--navy-m));
+      border-radius: 13px;
+      padding: 15px 18px;
+    }
+
+    .otot-r {
+      display: flex;
+      justify-content: space-between;
+      font-size: .83rem;
+      color: rgba(255, 255, 255, .62);
+      padding: 3px 0;
+    }
+
+    .otot-r.fin {
+      font-size: 1.03rem;
+      font-weight: 800;
+      color: #fff;
+      border-top: 1px solid rgba(255, 255, 255, .14);
+      padding-top: 9px;
+      margin-top: 5px;
+    }
+
+    /* STATUS SEL */
+    .ssel {
+      background: #fff;
+      border: 2px solid var(--blue-sky);
+      border-radius: 9px;
+      padding: 6px 11px;
+      font-size: .8rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      outline: none;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+
+    .ssel:focus {
+      border-color: var(--blue);
+    }
+
+    /* TOP PRODS */
+    .tp-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px;
+      border-radius: 9px;
+      transition: background .15s;
+    }
+
+    .tp-item:hover {
+      background: var(--off);
+    }
+
+    .tp-img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--blue-sky);
+      background: var(--blue-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .tp-name {
+      flex: 1;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .tp-s {
+      font-size: .76rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    /* SETTINGS */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .s-card {
+      background: #fff;
+      border-radius: 19px;
+      padding: 26px;
+      box-shadow: var(--sh-sm);
+      border: 1.5px solid rgba(33, 150, 243, .07);
+    }
+
+    .s-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .s-card h3 .sh {
+      font-size: 1.3rem;
+    }
+
+    .si-grp {
+      margin-bottom: 14px;
+    }
+
+    .si-grp label {
+      display: block;
+      font-size: .74rem;
+      font-weight: 800;
+      color: var(--txt-s);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .si-grp input {
+      width: 100%;
+      background: var(--off);
+      border: 2px solid var(--blue-sky);
+      border-radius: 11px;
+      padding: 10px 13px;
+      font-size: .87rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: all .2s;
+    }
+
+    .si-grp input:focus {
+      border-color: var(--blue);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, .1);
+    }
+
+    .s-save {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 11px 28px;
+      font-size: .87rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 5px 0 rgba(0, 131, 188, .35);
+      transition: all .22s;
+      margin-top: 6px;
+    }
+
+    .s-save:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 0 rgba(0, 131, 188, .3), var(--glow);
+    }
+
+    .social-preview {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .sp-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--off);
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--txt-m);
+      border: 1.5px solid var(--blue-sky);
+    }
+
+    .sp-ico {
+      font-size: 1.3rem;
+    }
+
+    .admin-cred {
+      background: var(--off);
+      border-radius: 13px;
+      padding: 16px;
+    }
+
+    .admin-cred p {
+      font-size: .83rem;
+      color: var(--txt-s);
+      margin-bottom: 10px;
+    }
+
+    /* DEL CONFIRM */
+    .del-confirm {
+      text-align: center;
+      padding: 8px 0 6px;
+    }
+
+    .del-confirm .di {
+      font-size: 2.8rem;
+      margin-bottom: 11px;
+      display: block;
+    }
+
+    .del-confirm h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    .del-confirm p {
+      color: var(--txt-s);
+      font-size: .88rem;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 99999;
+      background: linear-gradient(135deg, var(--navy), var(--navy-m));
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 13px;
+      font-size: .83rem;
+      font-weight: 700;
+      box-shadow: 0 8px 28px rgba(13, 33, 55, .3);
+      transform: translateY(100px) scale(.9);
+      opacity: 0;
+      transition: all .4s cubic-bezier(.34, 1.5, .64, 1);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(255, 255, 255, .14);
+    }
+
+    .toast.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    @media(max-width:900px) {
+      .sidebar {
+        width: 68px;
+      }
+
+      .sidebar .sb-link span,
+      .sidebar .sb-logo h2,
+      .sidebar .sb-logo span,
+      .sidebar .sb-sec,
+      .sidebar .sb-un,
+      .sidebar .sb-ur,
+      .sidebar .sb-badge {
+        display: none;
+      }
+
+      .sidebar .sb-link {
+        justify-content: center;
+        padding: 13px;
+      }
+
+      .main-area {
+        margin-left: 68px;
+      }
+
+      .sg {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dg2 {
+        grid-template-columns: 1fr;
+      }
+
+      .dg3 {
+        grid-template-columns: 1fr;
+      }
+
+      .odg {
+        grid-template-columns: 1fr;
+      }
+
+      .settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .frow {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginScreen">
+    <div class="lcard">
+      <div class="llogo">
+        <div class="li">✨</div>
+        <h1>PAK STYLE</h1>
+      </div>
+      <div class="lsub">Admin Panel — Sign in to continue</div>
+      <div class="lerr" id="lerr">❌ Invalid username or password</div>
+      <div class="lgrp"><label>Username</label><input id="lu" placeholder="admin"
+          onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="lgrp"><label>Password</label><input type="password" id="lp" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="lbtn" onclick="doLogin()">Sign In →</button>
+      <div class="lhint">Default: <strong>admin</strong> / <strong>pakstyle2025</strong></div>
+    </div>
+  </div>
+
+  <!-- ADMIN APP -->
+  <div id="adminApp">
+    <div class="alayout">
+      <aside class="sidebar">
+        <div class="sb-logo">
+          <div class="li">✨</div>
+          <h2>PAK STYLE</h2><span>Admin Panel</span>
+        </div>
+        <nav class="sb-nav">
+          <div class="sb-sec">Main</div>
+          <div class="sb-link active" onclick="showPage('dashboard',this)"><span
+              class="si">📊</span><span>Dashboard</span></div>
+          <div class="sb-sec">Manage</div>
+          <div class="sb-link" onclick="showPage('products',this)"><span class="si">📦</span><span>Products</span></div>
+          <div class="sb-link" onclick="showPage('orders',this)"><span class="si">🛒</span><span>Orders</span><span
+              class="sb-badge" id="pendBadge">0</span></div>
+          <div class="sb-link" onclick="showPage('customers',this)"><span class="si">👥</span><span>Customers</span>
+          </div>
+          <div class="sb-sec">Config</div>
+          <div class="sb-link" onclick="showPage('settings',this)"><span class="si">⚙️</span><span>Settings</span></div>
+        </nav>
+        <div class="sb-bot">
+          <div class="sb-user">
+            <div class="sb-av">A</div>
+            <div>
+              <div class="sb-un">Admin</div>
+              <div class="sb-ur">Super Admin</div>
+            </div>
+          </div>
+          <button class="logout-btn" onclick="doLogout()">🚪 <span>Logout</span></button>
+        </div>
+      </aside>
+
+      <div class="main-area">
+        <div class="topbar">
+          <h2 id="pgTitle">Dashboard</h2>
+          <div class="tb-r">
+            <span class="tb-date" id="todayDate"></span>
+            <button class="tb-btn" onclick="refreshPage()">↻ Refresh</button>
+            <a class="tb-btn" href="pakstyle.html" target="_blank"
+              style="background:#E8F5E9;border-color:#C8E6C9;color:var(--green-d)">🌐 View Store</a>
+          </div>
+        </div>
+
+        <div class="content">
+
+          <!-- DASHBOARD -->
+          <div class="apg active" id="page-dashboard">
+            <div class="sg">
+              <div class="sc bl">
+                <div class="sc-ico bl">💰</div>
+                <div class="sc-v" id="sv-rev">PKR 0</div>
+                <div class="sc-l">Total Revenue</div>
+                <div class="sc-ch" id="sv-rev-c">All time</div>
+              </div>
+              <div class="sc gr">
+                <div class="sc-ico gr">🛒</div>
+                <div class="sc-v" id="sv-ord">0</div>
+                <div class="sc-l">Total Orders</div>
+                <div class="sc-ch" id="sv-ord-c">All time</div>
+              </div>
+              <div class="sc or">
+                <div class="sc-ico or">👥</div>
+                <div class="sc-v" id="sv-cus">0</div>
+                <div class="sc-l">Unique Customers</div>
+                <div class="sc-ch" id="sv-cus-c">All time</div>
+              </div>
+              <div class="sc pu">
+                <div class="sc-ico pu">👁️</div>
+                <div class="sc-v" id="sv-vis">0</div>
+                <div class="sc-l">Store Visitors</div>
+                <div class="sc-ch">All time</div>
+              </div>
+            </div>
+            <div class="dg2">
+              <div class="card">
+                <div class="card-hd">Revenue — Last 7 Days <span id="wkRev">PKR 0</span></div>
+                <div class="chart-wrap"><svg class="chart-svg" id="revChart" viewBox="0 0 520 160"
+                    xmlns="http://www.w3.org/2000/svg"></svg></div>
+              </div>
+              <div class="card">
+                <div class="card-hd">Orders by Status</div>
+                <div id="statusRing"></div>
+              </div>
+            </div>
+            <div class="dg3">
+              <div class="card" style="grid-column:span 2">
+                <div class="card-hd">Recent Orders <a onclick="showPage('orders',null)">View All →</a></div>
+                <div class="tbl-wrap">
+                  <table class="dt">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recOrdBdy"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-hd">Top Products</div>
+                <div id="topProds"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PRODUCTS -->
+          <div class="apg" id="page-products">
+            <div class="phd">
+              <div>
+                <h2>Products</h2>
+                <p>Manage your store inventory</p>
+              </div><button class="btn-add" onclick="openAddProd()">+ Add Product</button>
+            </div>
+            <div class="tctrl">
+              <input class="sbox" id="prodSrc" placeholder="🔍 Search products..." oninput="renderProdsTbl()">
+              <div class="ftabs">
+                <button class="ftab active" onclick="setpf('all',this)">All</button>
+                <button class="ftab" onclick="setpf('clothing',this)">👗 Clothing</button>
+                <button class="ftab" onclick="setpf('beauty',this)">💄 Beauty</button>
+                <button class="ftab" onclick="setpf('perfumes',this)">🌸 Perfumes</button>
+              </div>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden">
+              <div class="tbl-wrap">
+                <table class="dt">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>Brand</th>
+                      <th>Price</th>
+                      <th>Badge</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="prodsBdy"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ORDERS -->
+          <div class="apg" id="page-orders">
+            <div class="phd">
+              <div>
+                <h2>Orders</h2>
+                <p>Track and manage all customer orders</p>
+              </div>
+            </div>
+            <div class="tctrl">
+              <input class="sbox" id="ordSrc" placeholder="🔍 Search orders..." oninput="renderOrdsTbl()">
+              <div class="ftabs">
+                <button class="ftab active" onclick="setof('all',this)">All</button>
+                <button class="ftab" onclick="setof('pending',this)">⏳ Pending</button>
+                <button class="ftab" onclick="setof('confirmed',this)">✅ Confirmed</button>
+                <button class="ftab" onclick="setof('shipped',this)">🚚 Shipped</button>
+                <button class="ftab" onclick="setof('delivered',this)">📦 Delivered</button>
+                <button class="ftab" onclick="setof('cancelled',this)">❌ Cancelled</button>
+              </div>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden">
+              <div class="tbl-wrap">
+                <table class="dt">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>City</th>
+                      <th>Items</th>
+                      <th>Total</th>
+                      <th>Payment</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordsBdy"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- CUSTOMERS -->
+          <div class="apg" id="page-customers">
+            <div class="phd">
+              <div>
+                <h2>Customers</h2>
+                <p>All customers who placed orders</p>
+              </div>
+            </div>
+            <div class="tctrl"><input class="sbox" id="cusSrc" placeholder="🔍 Search..." oninput="renderCusTbl()">
+            </div>
+            <div class="card" style="padding:0;overflow:hidden">
+              <div class="tbl-wrap">
+                <table class="dt">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>WhatsApp</th>
+                      <th>City</th>
+                      <th>Province</th>
+                      <th>Orders</th>
+                      <th>Total Spent</th>
+                      <th>Last Order</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cusBdy"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SETTINGS -->
+          <div class="apg" id="page-settings">
+            <div class="phd">
+              <div>
+                <h2>Settings</h2>
+                <p>Configure store & social media</p>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <div class="s-card">
+                <h3><span class="sh">📱</span> Social Media Links</h3>
+                <div class="si-grp"><label>Facebook URL</label><input id="set-fb"
+                    placeholder="https://facebook.com/yourpage"></div>
+                <div class="si-grp"><label>Instagram URL</label><input id="set-ig"
+                    placeholder="https://instagram.com/yourhandle"></div>
+                <div class="si-grp"><label>WhatsApp Number</label><input id="set-wa"
+                    placeholder="923001234567 (with country code)"></div>
+                <div class="si-grp"><label>WhatsApp Business Name</label><input id="set-wa-name"
+                    placeholder="Pak Style Official"></div>
+                <button class="s-save" onclick="saveSocial()">💾 Save Social Links</button>
+                <div class="social-preview" id="socialPreview"></div>
+              </div>
+              <div class="s-card">
+                <h3><span class="sh">🏪</span> Store Info</h3>
+                <div class="si-grp"><label>Store Name</label><input id="set-sname" placeholder="Pak Style"></div>
+                <div class="si-grp"><label>Store Tagline</label><input id="set-tagline" placeholder="Fashion & Beauty">
+                </div>
+                <div class="si-grp"><label>Store Email</label><input id="set-email" placeholder="info@pakstyle.pk">
+                </div>
+                <div class="si-grp"><label>Store Phone</label><input id="set-phone" placeholder="0300-0000000"></div>
+                <div class="si-grp"><label>Footer Copyright Text</label><input id="set-copy"
+                    placeholder="© 2025 Pak Style. All Rights Reserved."></div>
+                <button class="s-save" onclick="saveStoreInfo()">💾 Save Store Info</button>
+              </div>
+              <div class="s-card">
+                <h3><span class="sh">🔐</span> Admin Credentials</h3>
+                <div class="admin-cred">
+                  <p style="color:var(--txt-m);font-weight:600">Current login credentials:</p>
+                  <p>Username: <strong>admin</strong></p>
+                  <p>Password: <strong>pakstyle2025</strong></p>
+                  <p style="margin-top:10px;font-size:.78rem;color:var(--txt-s)">To change credentials, update the
+                    <code>doLogin()</code> function in the HTML file.</p>
+                </div>
+              </div>
+              <div class="s-card">
+                <h3><span class="sh">🔗</span> Store Links</h3>
+                <p style="font-size:.85rem;color:var(--txt-s);margin-bottom:14px">Save both files in the same folder and
+                  open them in the same browser for data sharing via localStorage.</p>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <a href="pakstyle.html" target="_blank" style="text-decoration:none"><button class="s-save"
+                      style="width:100%">🌐 Open Customer Store</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="mov" id="prodMov">
+    <div class="mbox" style="max-width:720px">
+      <div class="mhd">
+        <h2 id="prodMTitle">Add Product</h2><button class="mcl" onclick="closeProdM()">✕</button>
+      </div>
+      <div class="mbdy">
+        <input type="hidden" id="eid">
+        <div class="frow">
+          <div class="fgrp"><label>Product Name *</label><input id="pn" placeholder="e.g. Embroidered Lawn Suit"></div>
+          <div class="fgrp"><label>Brand *</label><input id="pbr" placeholder="e.g. Gul Ahmed"></div>
+        </div>
+        <div class="frow">
+          <div class="fgrp"><label>Category *</label><select id="pcat">
+              <option value="clothing">👗 Clothing</option>
+              <option value="beauty">💄 Beauty</option>
+              <option value="perfumes">🌸 Perfumes</option>
+            </select></div>
+          <div class="fgrp"><label>Badge</label><select id="pbadge">
+              <option value="">No Badge</option>
+              <option>Bestseller</option>
+              <option>New</option>
+              <option>Sale</option>
+              <option>Trending</option>
+              <option>Premium</option>
+              <option>Luxury</option>
+            </select></div>
+        </div>
+        <div class="frow">
+          <div class="fgrp"><label>Selling Price (PKR) *</label><input type="number" id="ppr" placeholder="4500"></div>
+          <div class="fgrp"><label>Original Price (optional)</label><input type="number" id="pold" placeholder="6000">
+          </div>
+        </div>
+        <div class="fgrp"><label>Product Description *</label><textarea id="pdesc"
+            placeholder="Describe the product in detail..."></textarea></div>
+        <div class="frow">
+          <div class="fgrp"><label>Feature 1</label><input id="pf1" placeholder="e.g. 3-piece premium lawn"></div>
+          <div class="fgrp"><label>Feature 2</label><input id="pf2" placeholder="e.g. Hand-embroidered neckline"></div>
+        </div>
+        <div class="frow">
+          <div class="fgrp"><label>Feature 3</label><input id="pf3" placeholder="e.g. Matching dupatta"></div>
+          <div class="fgrp"><label>Feature 4</label><input id="pf4" placeholder="e.g. Unstitched fabric"></div>
+        </div>
+        <!-- IMAGE UPLOAD -->
+        <div class="fgrp">
+          <label>Product Images (up to 4)</label>
+          <div class="img-upload-area" id="imgDropArea">
+            <input type="file" id="imgInput" accept="image/*" multiple onchange="handleImgs(this.files)">
+            <div class="ui">📷</div>
+            <p>Click or drag images here (max 4 images, JPG/PNG/WEBP)</p>
+            <p style="font-size:.75rem;color:var(--blue);margin-top:4px">First image will be the main display image</p>
+          </div>
+          <div class="img-previews" id="imgPreviews"></div>
+        </div>
+      </div>
+      <div class="mft"><button class="mbtn-c" onclick="closeProdM()">Cancel</button><button class="mbtn-s"
+          onclick="saveProd()">💾 Save Product</button></div>
+    </div>
+  </div>
+
+  <!-- ORDER MODAL -->
+  <div class="mov" id="ordMov">
+    <div class="mbox" style="max-width:680px">
+      <div class="mhd">
+        <h2 id="ordMTitle">Order Detail</h2><button class="mcl" onclick="closeOrdM()">✕</button>
+      </div>
+      <div class="mbdy" id="ordMBdy"></div>
+      <div class="mft"><button class="mbtn-c" onclick="closeOrdM()">Close</button></div>
+    </div>
+  </div>
+
+  <!-- DELETE MODAL -->
+  <div class="mov" id="delMov">
+    <div class="mbox" style="max-width:400px">
+      <div class="mhd">
+        <h2>Confirm Delete</h2><button class="mcl" onclick="closeDelM()">✕</button>
+      </div>
+      <div class="mbdy">
+        <div class="del-confirm"><span class="di">🗑️</span>
+          <h3>Delete Product?</h3>
+          <p id="delMsg">This cannot be undone.</p>
+        </div>
+      </div>
+      <div class="mft"><button class="mbtn-c" onclick="closeDelM()">Cancel</button><button class="mbtn-d"
+          onclick="confirmDel()">Delete</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span>✓</span><span id="toastMsg">Done!</span></div>
+
+  <script>
+    // ── DEFAULT DATA ──
+    const DPRODS = [
+      { id: 1, cat: 'clothing', name: 'Embroidered Lawn Suit', brand: 'Gul Ahmed', price: 4500, old: 6000, images: [], badge: 'Bestseller', desc: 'Premium 3-piece embroidered lawn suit with hand-crafted neckline embroidery. Perfect for summer & Eid celebrations.', feats: ['3-piece premium lawn', 'Hand-embroidered neckline', 'Matching dupatta included', 'Unstitched fabric'] },
+      { id: 2, cat: 'clothing', name: 'Chiffon Formal Suit', brand: 'Sana Safinaz', price: 8500, old: 11000, images: [], badge: 'New', desc: 'Elegant chiffon formal 3-piece suit with intricate threadwork.', feats: ['Chiffon fabric', 'Threadwork embroidery', 'Party & formal wear', 'Dupatta included'] },
+      { id: 3, cat: 'clothing', name: 'Cotton Kurta Set', brand: 'Khaadi', price: 2800, old: 3500, images: [], badge: 'Sale', desc: '100% cotton kurta with matching trouser for everyday casual wear.', feats: ['100% pure cotton', 'Machine washable', 'Everyday casual wear', 'Ready to wear'] },
+      { id: 4, cat: 'clothing', name: 'Luxury Bridal Lehenga', brand: 'Elan', price: 35000, old: 45000, images: [], badge: 'Premium', desc: 'Exquisite hand-embroidered bridal lehenga with heavy zardozi work.', feats: ['Zardozi embroidery', 'Bridal lehenga', 'Custom sizing', 'Luxury packaging'] },
+      { id: 5, cat: 'clothing', name: 'Silk Palazzo Set', brand: 'Mango Pak', price: 5200, old: 7000, images: [], badge: 'Trending', desc: 'Flowy silk palazzo with embellished top.', feats: ['Silk fabric', 'Embellished top', 'Flowy fit', 'Fusion wear'] },
+      { id: 6, cat: 'clothing', name: 'Printed Linen Suit', brand: 'Alkaram', price: 3200, old: 4000, images: [], badge: 'New', desc: 'Digitally-printed linen 2-piece suit.', feats: ['Digital print', 'Linen fabric', '2-piece suit', 'Easy iron'] },
+      { id: 7, cat: 'beauty', name: 'Matte Liquid Lipstick', brand: 'Medora', price: 750, old: 1000, images: [], badge: 'Bestseller', desc: 'Long-lasting matte lipstick, 12+ hours, 24 gorgeous shades.', feats: ['12-hour wear', 'Non-drying', '24 shades', 'Cruelty-free'] },
+      { id: 8, cat: 'beauty', name: 'HD Foundation', brand: 'Rivaj UK', price: 1200, old: 1600, images: [], badge: 'New', desc: 'Lightweight HD foundation with SPF 15.', feats: ['SPF 15', 'Buildable coverage', '20+ shades', 'Long-lasting'] },
+      { id: 9, cat: 'beauty', name: 'Brightening Face Serum', brand: 'Neutrogena', price: 2500, old: 3200, images: [], badge: 'Sale', desc: 'Vitamin C serum that fades dark spots.', feats: ['Vitamin C', 'Fades spots', 'All skin types', 'Dermatologist tested'] },
+      { id: 10, cat: 'beauty', name: 'Eyeshadow Palette', brand: 'BYS', price: 1800, old: 2400, images: [], badge: 'Trending', desc: '30-pan palette with mattes, shimmers and glitters.', feats: ['30 shades', 'Matte & shimmer', 'Pigmented', 'Blendable'] },
+      { id: 11, cat: 'beauty', name: 'Glow Highlighter', brand: 'LA Girl', price: 950, old: 1300, images: [], badge: 'Bestseller', desc: 'Intense glow highlighter with micro-fine pearl pigments.', feats: ['Micro-fine pearls', 'Intense glow', 'Buildable', 'Face & body'] },
+      { id: 12, cat: 'beauty', name: 'Moisturizing BB Cream', brand: 'Garnier', price: 1100, old: 1500, images: [], badge: 'New', desc: '5-in-1 BB cream with SPF 20.', feats: ['SPF 20', '5-in-1', 'All day moisture', 'Lightweight'] },
+      { id: 13, cat: 'perfumes', name: 'Oud Al Layl Attar', brand: 'Al Haramain', price: 3500, old: 4500, images: [], badge: 'Premium', desc: 'Rich oriental attar from aged oud wood, 12+ hours.', feats: ['Aged oud wood', 'Dark musk', '12+ hrs', 'Alcohol-free'] },
+      { id: 14, cat: 'perfumes', name: 'Rose Garden EDP', brand: 'Junaid Jamshed', price: 2800, old: 3600, images: [], badge: 'Bestseller', desc: 'Romantic Damascene rose, jasmine and sandalwood.', feats: ['Damascene rose', 'Jasmine', '8-hour', 'Gift-ready'] },
+      { id: 15, cat: 'perfumes', name: 'Amber Noir Spray', brand: 'Rasasi', price: 4200, old: 5500, images: [], badge: 'Trending', desc: 'Warm amber and vanilla unisex spray.', feats: ['Amber & vanilla', 'Oriental spice', 'Unisex', '100ml'] },
+      { id: 16, cat: 'perfumes', name: 'Fresh Citrus Mist', brand: 'Body Shop Pak', price: 1500, old: 2000, images: [], badge: 'New', desc: 'Refreshing citrus body mist for daily use.', feats: ['Citrus & bergamot', 'Light musk', 'Daily use', '250ml'] },
+      { id: 17, cat: 'perfumes', name: 'Mystic Saffron Attar', brand: 'Swiss Arabian', price: 5500, old: 7000, images: [], badge: 'Luxury', desc: 'Precious saffron attar with Bulgarian rose.', feats: ['Pure saffron', 'Bulgarian rose', 'Traditional', 'Luxury set'] },
+      { id: 18, cat: 'perfumes', name: 'Jasmine Breeze EDP', brand: 'Fragrance Studio', price: 2200, old: 2900, images: [], badge: 'Sale', desc: 'Delicate jasmine, peach and creamy musk EDP.', feats: ['Fresh jasmine', 'Peach top note', 'Creamy musk', '75ml'] },
+    ];
+
+    const DEMO_ORDERS = [
+      { id: 'PS-100001', date: new Date(Date.now() - 86400000).toISOString(), status: 'pending', payment: 'cod', customer: { name: 'Ayesha Khan', email: 'ayesha@gmail.com', phone: '0301-1234567', whatsapp: '0301-1234567', address: 'House 12, Model Town', city: 'Lahore', province: 'Punjab', notes: '' }, items: [{ id: 1, name: 'Embroidered Lawn Suit', images: [], qty: 2, price: 4500 }, { id: 14, name: 'Rose Garden EDP', images: [], qty: 1, price: 2800 }], subtotal: 11800, delivery: 200, total: 12000 },
+      { id: 'PS-100002', date: new Date(Date.now() - 86400000 * 2).toISOString(), status: 'confirmed', payment: 'easypaisa', customer: { name: 'Sara Ahmed', email: 'sara@hotmail.com', phone: '0312-9876543', whatsapp: '0312-9876543', address: 'Block B, Gulshan', city: 'Karachi', province: 'Sindh', notes: '' }, items: [{ id: 7, name: 'Matte Liquid Lipstick', images: [], qty: 3, price: 750 }, { id: 10, name: 'Eyeshadow Palette', images: [], qty: 1, price: 1800 }], subtotal: 4050, delivery: 200, total: 4250 },
+      { id: 'PS-100003', date: new Date(Date.now() - 86400000 * 3).toISOString(), status: 'delivered', payment: 'cod', customer: { name: 'Fatima Malik', email: 'fatima@yahoo.com', phone: '0322-5550000', whatsapp: '0322-5550000', address: 'F-6, Street 4', city: 'Islamabad', province: 'Punjab', notes: 'Pack carefully' }, items: [{ id: 4, name: 'Luxury Bridal Lehenga', images: [], qty: 1, price: 35000 }], subtotal: 35000, delivery: 200, total: 35200 },
+      { id: 'PS-100004', date: new Date(Date.now() - 86400000 * 4).toISOString(), status: 'shipped', payment: 'jazzcash', customer: { name: 'Hira Baig', email: 'hira@gmail.com', phone: '0344-6667777', whatsapp: '0344-6667777', address: 'Johar Town', city: 'Lahore', province: 'Punjab', notes: '' }, items: [{ id: 9, name: 'Brightening Face Serum', images: [], qty: 2, price: 2500 }, { id: 8, name: 'HD Foundation', images: [], qty: 1, price: 1200 }], subtotal: 6200, delivery: 200, total: 6400 },
+      { id: 'PS-100005', date: new Date().toISOString(), status: 'pending', payment: 'cod', customer: { name: 'Nadia Hussain', email: 'nadia@gmail.com', phone: '0311-2223333', whatsapp: '0311-2223333', address: 'G-9, Markaz', city: 'Islamabad', province: 'Punjab', notes: '' }, items: [{ id: 17, name: 'Mystic Saffron Attar', images: [], qty: 1, price: 5500 }, { id: 15, name: 'Amber Noir Spray', images: [], qty: 1, price: 4200 }], subtotal: 9700, delivery: 200, total: 9900 },
+    ];
+
+    // ── STATE ──
+    let pfv = 'all', ofv = 'all', delTarget = null, editImgs = [];
+
+    // ── STORAGE ──
+    const S = {
+      gp: () => { const s = localStorage.getItem('ps_products'); return s ? JSON.parse(s) : JSON.parse(JSON.stringify(DPRODS)); },
+      sp: (p) => localStorage.setItem('ps_products', JSON.stringify(p)),
+      go: () => { const s = localStorage.getItem('ps_orders'); if (!s || JSON.parse(s).length === 0) { localStorage.setItem('ps_orders', JSON.stringify(DEMO_ORDERS)); return DEMO_ORDERS; } return JSON.parse(s); },
+      so: (o) => localStorage.setItem('ps_orders', JSON.stringify(o)),
+      gset: () => JSON.parse(localStorage.getItem('ps_settings') || '{}'),
+      sset: (s) => localStorage.setItem('ps_settings', JSON.stringify(s)),
+      gvis: () => parseInt(localStorage.getItem('ps_visitors') || '0'),
+    };
+
+    // ── AUTH ──
+    function doLogin() {
+      if (document.getElementById('lu').value.trim() === 'admin' && document.getElementById('lp').value.trim() === 'pakstyle2025') {
+        localStorage.setItem('ps_admin', '1');
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminApp').style.display = 'block';
+        initAdmin();
+      } else document.getElementById('lerr').style.display = 'block';
+    }
+    function doLogout() { localStorage.removeItem('ps_admin'); location.reload(); }
+
+    function initAdmin() {
+      document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-PK', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+      if (!localStorage.getItem('ps_products')) S.sp(DPRODS);
+      S.go();
+      renderDash(); renderProdsTbl(); renderOrdsTbl(); renderCusTbl(); loadSettings(); updPendBadge();
+    }
+
+    function updPendBadge() { const n = S.go().filter(o => o.status === 'pending').length; const el = document.getElementById('pendBadge'); el.textContent = n; el.style.display = n ? 'block' : 'none'; }
+
+    function showPage(name, el) {
+      document.querySelectorAll('.apg').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      if (el) el.classList.add('active');
+      else document.querySelectorAll('.sb-link').forEach(l => { if (l.textContent.trim().toLowerCase().includes(name)) l.classList.add('active'); });
+      const t = { dashboard: 'Dashboard', products: 'Products', orders: 'Orders', customers: 'Customers', settings: 'Settings' };
+      document.getElementById('pgTitle').textContent = t[name] || name;
+      if (name === 'dashboard') renderDash();
+      if (name === 'products') renderProdsTbl();
+      if (name === 'orders') renderOrdsTbl();
+      if (name === 'customers') renderCusTbl();
+      if (name === 'settings') loadSettings();
+    }
+    function refreshPage() { initAdmin(); showToast('✅ Refreshed!'); }
+
+    // ── DASHBOARD ──
+    function renderDash() {
+      const ords = S.go(), vis = S.gvis();
+      const rev = ords.filter(o => o.status !== 'cancelled').reduce((s, o) => s + o.total, 0);
+      const custs = [...new Set(ords.map(o => o.customer.email))].length;
+      document.getElementById('sv-rev').textContent = 'PKR ' + rev.toLocaleString();
+      document.getElementById('sv-ord').textContent = ords.length;
+      document.getElementById('sv-cus').textContent = custs;
+      document.getElementById('sv-vis').textContent = vis.toLocaleString();
+      document.getElementById('sv-ord-c').textContent = `⏳ ${ords.filter(o => o.status === 'pending').length} pending`;
+      document.getElementById('sv-cus-c').textContent = `📍 ${[...new Set(ords.map(o => o.customer.city))].length} cities`;
+      document.getElementById('sv-rev-c').textContent = `✅ ${ords.filter(o => o.status === 'delivered').length} delivered`;
+
+      const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - (6 - i)); const rv = ords.filter(o => o.status !== 'cancelled' && new Date(o.date).toDateString() === d.toDateString()).reduce((s, o) => s + o.total, 0); return { d: d.toLocaleDateString('en', { weekday: 'short' }), v: rv }; });
+      document.getElementById('wkRev').textContent = 'PKR ' + days.reduce((s, d) => s + d.v, 0).toLocaleString();
+      const mx = Math.max(...days.map(d => d.v), 1);
+      const bars = days.map((d, i) => { const h = Math.max(d.v / mx * 100, 2); const x = 36 + i * 70; const y = 145 - h; return `<rect x="${x}" y="${y}" width="44" height="${h}" rx="6" fill="url(#bg${i})"/><text x="${x + 22}" y="158" text-anchor="middle" font-size="10" fill="#5B82A0" font-family="Outfit">${d.d}</text>${d.v ? `<text x="${x + 22}" y="${y - 5}" text-anchor="middle" font-size="9" fill="#2196F3" font-weight="700" font-family="Outfit">${d.v >= 1000 ? (d.v / 1000).toFixed(1) + 'k' : d.v}</text>` : ''}`; }).join('');
+      const defs = days.map((_, i) => `<linearGradient id="bg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${i === days.length - 1 ? '#00BCD4' : '#2196F3'}"/><stop offset="100%" stop-color="#42A5F5" stop-opacity=".45"/></linearGradient>`).join('');
+      document.getElementById('revChart').innerHTML = `<defs>${defs}</defs>${bars}`;
+
+      const statuses = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
+      const colors = { pending: '#FF9800', confirmed: '#2196F3', shipped: '#9C27B0', delivered: '#4CAF50', cancelled: '#F44336' };
+      document.getElementById('statusRing').innerHTML = statuses.map(s => { const c = ords.filter(o => o.status === s).length; const p = Math.round(c / Math.max(ords.length, 1) * 100); return `<div class="sr-item"><div class="sr-dot" style="background:${colors[s]}"></div><div class="sr-l">${s.charAt(0).toUpperCase() + s.slice(1)}</div><div class="sr-bw"><div class="sr-b" style="width:${p}%;background:${colors[s]}"></div></div><div class="sr-v">${c}</div></div>`; }).join('');
+
+      document.getElementById('recOrdBdy').innerHTML = ords.slice(0, 5).map(o => `<tr class="click" onclick="viewOrd('${o.id}')"><td><strong>${o.id}</strong></td><td>${o.customer.name}</td><td style="color:var(--blue);font-weight:700">PKR ${o.total.toLocaleString()}</td><td><span class="badge confirmed">${o.payment.toUpperCase()}</span></td><td><span class="badge ${o.status}">${o.status}</span></td><td style="font-size:.78rem;color:var(--txt-s)">${new Date(o.date).toLocaleDateString()}</td></tr>`).join('');
+
+      const sm = {}; ords.forEach(o => o.items.forEach(i => { sm[i.id] = (sm[i.id] || 0) + i.qty; }));
+      const prods = S.gp();
+      document.getElementById('topProds').innerHTML = Object.entries(sm).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([id, qty]) => { const p = prods.find(x => x.id == id); if (!p) return ''; const img = p.images && p.images[0]; return `<div class="tp-item"><div class="tp-img">${img ? `<img src="${img}" style="width:100%;height:100%;border-radius:8px;object-fit:cover">` : (p.emoji || '📦')}</div><div class="tp-name">${p.name}</div><div class="tp-s">${qty} sold</div></div>`; }).join('');
+    }
+
+    // ── PRODUCTS ──
+    function setpf(v, el) { pfv = v; document.querySelectorAll('#page-products .ftab').forEach(t => t.classList.remove('active')); el.classList.add('active'); renderProdsTbl(); }
+    function renderProdsTbl() {
+      const src = (document.getElementById('prodSrc')?.value || '').toLowerCase();
+      const prods = S.gp().filter(p => (pfv === 'all' || p.cat === pfv) && (!src || p.name.toLowerCase().includes(src) || p.brand.toLowerCase().includes(src)));
+      const img1 = (p) => p.images && p.images[0] ? `<img class="pi-thumb" src="${p.images[0]}">` : `<div class="pi-placeholder">${p.emoji || '📦'}</div>`;
+      document.getElementById('prodsBdy').innerHTML = prods.length ? prods.map(p => `<tr><td>${img1(p)}</td><td><div style="font-weight:700;font-size:.86rem">${p.name}</div><div style="font-size:.73rem;color:var(--txt-s)">${(p.desc || '').slice(0, 50)}...</div></td><td><span class="badge ${p.cat}">${p.cat}</span></td><td style="font-size:.83rem">${p.brand}</td><td style="font-weight:800;color:var(--blue)">PKR ${p.price.toLocaleString()}</td><td>${p.badge ? `<span class="badge confirmed">${p.badge}</span>` : '-'}</td><td><div style="display:flex;gap:5px"><button class="btn-sm btn-e" onclick="openEditProd(${p.id})">✏️ Edit</button><button class="btn-sm btn-d" onclick="openDelM(${p.id},'${(p.name || '').replace(/'/g, "\\'")}')">🗑️</button></div></td></tr>`).join('') : `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--txt-s)">No products found.</td></tr>`;
+    }
+
+    // IMAGE HANDLING
+    function handleImgs(files) {
+      const remaining = 4 - editImgs.length;
+      const toAdd = Array.from(files).slice(0, remaining);
+      toAdd.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => { editImgs.push(e.target.result); renderImgPreviews(); };
+        reader.readAsDataURL(file);
+      });
+      document.getElementById('imgInput').value = '';
+    }
+
+    function renderImgPreviews() {
+      document.getElementById('imgPreviews').innerHTML = editImgs.map((img, i) => `<div class="img-prev"><img src="${img}" alt="Product image ${i + 1}">${i === 0 ? '<span class="main-tag">Main</span>' : ''}<button class="rm-img" onclick="removeImg(${i})">✕</button></div>`).join('');
+    }
+
+    function removeImg(i) { editImgs.splice(i, 1); renderImgPreviews(); }
+
+    function openAddProd() {
+      document.getElementById('prodMTitle').textContent = 'Add New Product';
+      document.getElementById('eid').value = '';
+      editImgs = [];
+      ['pn', 'pbr', 'pdesc', 'pf1', 'pf2', 'pf3', 'pf4'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('ppr').value = ''; document.getElementById('pold').value = '';
+      document.getElementById('pcat').value = 'clothing'; document.getElementById('pbadge').value = '';
+      renderImgPreviews();
+      document.getElementById('prodMov').classList.add('open');
+    }
+
+    function openEditProd(id) {
+      const prods = S.gp(), p = prods.find(x => x.id === id); if (!p) return;
+      document.getElementById('prodMTitle').textContent = 'Edit Product';
+      document.getElementById('eid').value = id;
+      document.getElementById('pn').value = p.name; document.getElementById('pbr').value = p.brand;
+      document.getElementById('pcat').value = p.cat; document.getElementById('pbadge').value = p.badge || '';
+      document.getElementById('ppr').value = p.price; document.getElementById('pold').value = p.old || '';
+      document.getElementById('pdesc').value = p.desc;
+      const f = p.feats || [];
+      ['pf1', 'pf2', 'pf3', 'pf4'].forEach((fid, i) => document.getElementById(fid).value = f[i] || '');
+      editImgs = [...(p.images || [])];
+      renderImgPreviews();
+      document.getElementById('prodMov').classList.add('open');
+    }
+
+    function closeProdM() { document.getElementById('prodMov').classList.remove('open'); }
+
+    function saveProd() {
+      const name = document.getElementById('pn').value.trim(), brand = document.getElementById('pbr').value.trim(), price = parseFloat(document.getElementById('ppr').value), desc = document.getElementById('pdesc').value.trim();
+      if (!name || !brand || !price || !desc) { showToast('⚠️ Fill all required fields!'); return; }
+      const prods = S.gp();
+      const feats = ['pf1', 'pf2', 'pf3', 'pf4'].map(id => document.getElementById(id).value.trim()).filter(Boolean);
+      const eid = document.getElementById('eid').value;
+      const pdata = { name, brand, price, desc, feats, images: [...editImgs], cat: document.getElementById('pcat').value, badge: document.getElementById('pbadge').value, old: parseFloat(document.getElementById('pold').value) || 0 };
+      if (eid) { const idx = prods.findIndex(x => x.id == eid); if (idx > -1) prods[idx] = { ...prods[idx], ...pdata }; showToast('✅ Product updated!'); }
+      else { pdata.id = Date.now(); prods.push(pdata); showToast('✅ Product added!'); }
+      S.sp(prods); closeProdM(); renderProdsTbl();
+    }
+
+    function openDelM(id, name) { delTarget = id; document.getElementById('delMsg').textContent = `Delete "${name}"?`; document.getElementById('delMov').classList.add('open'); }
+    function closeDelM() { document.getElementById('delMov').classList.remove('open'); delTarget = null; }
+    function confirmDel() { if (!delTarget) return; S.sp(S.gp().filter(p => p.id != delTarget)); closeDelM(); renderProdsTbl(); showToast('🗑️ Deleted!'); }
+
+    // ── ORDERS ──
+    function setof(v, el) { ofv = v; document.querySelectorAll('#page-orders .ftab').forEach(t => t.classList.remove('active')); el.classList.add('active'); renderOrdsTbl(); }
+    function renderOrdsTbl() {
+      const src = (document.getElementById('ordSrc')?.value || '').toLowerCase();
+      let ords = S.go();
+      if (ofv !== 'all') ords = ords.filter(o => o.status === ofv);
+      if (src) ords = ords.filter(o => o.id.toLowerCase().includes(src) || o.customer.name.toLowerCase().includes(src) || o.customer.city.toLowerCase().includes(src));
+      document.getElementById('ordsBdy').innerHTML = ords.length ? ords.map(o => `<tr class="click"><td><strong style="color:var(--blue)">${o.id}</strong></td><td><div style="font-weight:700;font-size:.86rem">${o.customer.name}</div><div style="font-size:.72rem;color:var(--txt-s)">${o.customer.email}</div></td><td style="font-size:.83rem">${o.customer.city}</td><td>${o.items.map(i => `<span style="font-size:1rem">${i.images && i.images[0] ? `<img src="${i.images[0]}" style="width:22px;height:22px;border-radius:4px;object-fit:cover;vertical-align:middle">` : ''}</span>`).join('')} <span style="font-size:.76rem;color:var(--txt-s)">${o.items.length} item(s)</span></td><td style="font-weight:800;color:var(--blue)">PKR ${o.total.toLocaleString()}</td><td><span class="badge confirmed">${o.payment.toUpperCase()}</span></td><td><select class="ssel" onchange="updOrdSt('${o.id}',this.value)">${['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'].map(s => `<option value="${s}" ${o.status === s ? 'selected' : ''}>${s.charAt(0).toUpperCase() + s.slice(1)}</option>`).join('')}</select></td><td style="font-size:.78rem;color:var(--txt-s)">${new Date(o.date).toLocaleDateString()}</td><td><button class="btn-sm btn-v" onclick="viewOrd('${o.id}')">👁️</button></td></tr>`).join('') : `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--txt-s)">No orders.</td></tr>`;
+    }
+
+    function updOrdSt(id, status) { const ords = S.go(); const o = ords.find(x => x.id === id); if (o) { o.status = status; S.so(ords); } updPendBadge(); showToast(`📦 Order ${id} → ${status}`); }
+
+    function viewOrd(id) {
+      const o = S.go().find(x => x.id === id); if (!o) return;
+      document.getElementById('ordMTitle').textContent = `Order ${o.id}`;
+      document.getElementById('ordMBdy').innerHTML = `<div class="odg"><div class="osect"><h4>👤 Customer</h4><div class="orow"><span>Name:</span><span>${o.customer.name}</span></div><div class="orow"><span>Email:</span><span>${o.customer.email}</span></div><div class="orow"><span>Phone:</span><span>${o.customer.phone}</span></div><div class="orow"><span>WhatsApp:</span><span>${o.customer.whatsapp}</span></div>${o.customer.notes ? `<div class="orow"><span>Notes:</span><span>${o.customer.notes}</span></div>` : ''}</div><div class="osect"><h4>📍 Delivery</h4><div class="orow"><span>Address:</span><span>${o.customer.address}</span></div><div class="orow"><span>City:</span><span>${o.customer.city}</span></div><div class="orow"><span>Province:</span><span>${o.customer.province || '-'}</span></div><div class="orow"><span>Payment:</span><span>${o.payment.toUpperCase()}</span></div><div class="orow"><span>Date:</span><span>${new Date(o.date).toLocaleString()}</span></div><div class="orow"><span>Status:</span><span><select class="ssel" onchange="updOrdSt('${o.id}',this.value);renderOrdsTbl()">${['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'].map(s => `<option ${o.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></span></div></div></div><div style="background:var(--off);border-radius:13px;padding:15px 17px;margin-bottom:14px"><h4 style="font-size:.7rem;font-weight:800;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px">🛍️ Ordered Items</h4>${o.items.map(i => { const img = i.images && i.images[0]; return `<div class="oi-row"><div class="oi-img">${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">` : (i.emoji || '📦')}</div><div class="oi-name">${i.name}</div><div class="oi-qty">×${i.qty}</div><div class="oi-price">PKR ${(i.price * i.qty).toLocaleString()}</div></div>`; }).join('')}</div><div class="otot"><div class="otot-r"><span>Subtotal</span><span>PKR ${o.subtotal.toLocaleString()}</span></div><div class="otot-r"><span>Delivery</span><span>PKR ${o.delivery.toLocaleString()}</span></div><div class="otot-r fin"><span>Total Payable</span><span>PKR ${o.total.toLocaleString()}</span></div></div>`;
+      document.getElementById('ordMov').classList.add('open');
+    }
+    function closeOrdM() { document.getElementById('ordMov').classList.remove('open'); }
+
+    // ── CUSTOMERS ──
+    function renderCusTbl() {
+      const src = (document.getElementById('cusSrc')?.value || '').toLowerCase();
+      const ords = S.go(); const cm = {};
+      ords.forEach(o => { const k = o.customer.email; if (!cm[k]) cm[k] = { ...o.customer, count: 0, spent: 0, last: o.date }; cm[k].count++; cm[k].spent += o.status !== 'cancelled' ? o.total : 0; if (new Date(o.date) > new Date(cm[k].last)) cm[k].last = o.date; });
+      let list = Object.values(cm); if (src) list = list.filter(c => c.name.toLowerCase().includes(src) || c.email.toLowerCase().includes(src) || c.city.toLowerCase().includes(src));
+      list.sort((a, b) => b.spent - a.spent);
+      document.getElementById('cusBdy').innerHTML = list.length ? list.map(c => `<tr><td><div style="font-weight:700;font-size:.88rem">${c.name}</div></td><td style="font-size:.8rem;color:var(--txt-m)">${c.email}</td><td style="font-size:.8rem">${c.phone}</td><td style="font-size:.8rem;color:var(--green-d)">📱 ${c.whatsapp}</td><td style="font-size:.8rem">${c.city}</td><td style="font-size:.8rem;color:var(--txt-s)">${c.province || '-'}</td><td style="text-align:center"><span class="badge confirmed">${c.count}</span></td><td style="font-weight:800;color:var(--blue)">PKR ${c.spent.toLocaleString()}</td><td style="font-size:.77rem;color:var(--txt-s)">${new Date(c.last).toLocaleDateString()}</td></tr>`).join('') : `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--txt-s)">No customers yet.</td></tr>`;
+    }
+
+    // ── SETTINGS ──
+    function loadSettings() {
+      const s = S.gset();
+      document.getElementById('set-fb').value = s.fb || '';
+      document.getElementById('set-ig').value = s.ig || '';
+      document.getElementById('set-wa').value = s.wa || '';
+      document.getElementById('set-wa-name').value = s.waName || '';
+      document.getElementById('set-sname').value = s.sname || 'Pak Style';
+      document.getElementById('set-tagline').value = s.tagline || 'Fashion & Beauty';
+      document.getElementById('set-email').value = s.email || '';
+      document.getElementById('set-phone').value = s.phone || '';
+      document.getElementById('set-copy').value = s.copy || '© 2025 Pak Style. All Rights Reserved.';
+      renderSocialPreview(s);
+    }
+
+    function saveSocial() {
+      const s = S.gset();
+      s.fb = document.getElementById('set-fb').value.trim();
+      s.ig = document.getElementById('set-ig').value.trim();
+      s.wa = document.getElementById('set-wa').value.trim();
+      s.waName = document.getElementById('set-wa-name').value.trim();
+      S.sset(s); renderSocialPreview(s); showToast('✅ Social links saved!');
+    }
+
+    function saveStoreInfo() {
+      const s = S.gset();
+      s.sname = document.getElementById('set-sname').value.trim();
+      s.tagline = document.getElementById('set-tagline').value.trim();
+      s.email = document.getElementById('set-email').value.trim();
+      s.phone = document.getElementById('set-phone').value.trim();
+      s.copy = document.getElementById('set-copy').value.trim();
+      S.sset(s); showToast('✅ Store info saved!');
+    }
+
+    function renderSocialPreview(s) {
+      const items = [];
+      if (s.fb) items.push(`<div class="sp-item"><span class="sp-ico">📘</span>Facebook</div>`);
+      if (s.ig) items.push(`<div class="sp-item"><span class="sp-ico">📸</span>Instagram</div>`);
+      if (s.wa) items.push(`<div class="sp-item"><span class="sp-ico">💬</span>WhatsApp</div>`);
+      document.getElementById('socialPreview').innerHTML = items.length ? items.join('') : `<p style="font-size:.8rem;color:var(--txt-s)">No social links added yet.</p>`;
+    }
+
+    // ── TOAST ──
+    function showToast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMsg').textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800); }
+
+    // ── BOOT ──
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('ps_admin') === '1') { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('adminApp').style.display = 'block'; initAdmin(); }
+    });
+  </script>
+</body>
+
+</html>
