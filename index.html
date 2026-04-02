@@ -2198,7 +2198,7 @@
       </div>
       <div class="feat-banner">
         <div class="feat-text">
-          <h2>New Arrivals — <em>Eid Collection 2025</em></h2>
+          <h2>New Arrivals — <em>Summer Collection 2025</em></h2>
           <p>Exclusive embroidered suits, luxury fabrics and premium accessories. Limited stock available!</p><button
             class="btn-prim" style="margin-top:22px" onclick="goPage('clothing')">Shop Now →</button>
         </div>
@@ -2562,16 +2562,30 @@
       const items = coMode === 'buynow' && curProd ? [{ id: curProd.id, qty: parseInt(document.getElementById('qtyI')?.value) || 1 }] : cart;
       const subtotal = items.reduce((s, i) => { const pd = prods.find(x => x.id === i.id); return s + (pd ? pd.price * i.qty : 0); }, 0);
       const oid = 'PS-' + Date.now().toString().slice(-6);
-      const order = {
-        id: oid, date: new Date().toISOString(), status: 'pending', payment: selPay,
-        customer: { name: n, email: e, phone: p, whatsapp: w, address: a, city: c, province: document.getElementById('fpr')?.value || '', notes: document.getElementById('fno')?.value || '' },
-        items: items.map(i => { const pd = prods.find(x => x.id === i.id); return { id: i.id, name: pd?.name || '', images: pd?.images || [], qty: i.qty, price: pd?.price || 0 }; }),
-        subtotal, delivery: 200, total: subtotal + 200
+      const orderItems = items.map(i => { const pd = prods.find(x => x.id === i.id); return { id: i.id, name: pd?.name || '', images: pd?.images || [], qty: i.qty, price: pd?.price || 0 }; });
+      const orderPayload = {
+        order_id: oid,
+        customer_name: n,
+        email: e,
+        phone: p,
+        address: a + (w ? ' (WhatsApp: ' + w + ')' : ''),
+        city: c,
+        province: document.getElementById('fpr')?.value || '',
+        total: subtotal + 200,
+        status: 'pending',
+        payment: selPay,
+        items: orderItems
       };
-      const orders = JSON.parse(localStorage.getItem('ps_orders') || '[]');
-      orders.unshift(order);
-      localStorage.setItem('ps_orders', JSON.stringify(orders));
-      localStorage.setItem('ps_visitors', (parseInt(localStorage.getItem('ps_visitors') || '0')));
+      // Save to localStorage as backup
+      const localOrders = JSON.parse(localStorage.getItem('ps_orders') || '[]');
+      localOrders.unshift({ ...orderPayload, date: new Date().toISOString(), subtotal, delivery: 200 });
+      localStorage.setItem('ps_orders', JSON.stringify(localOrders));
+      // Post to backend API
+      fetch('http://localhost:5000/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderPayload)
+      }).catch(err => console.warn('API order post failed (offline?):', err));
       document.getElementById('coBdy').innerHTML = `<div class="success-screen"><span class="si">🎉</span><h2>Order Placed!</h2><p>Thank you <strong>${n}</strong>! Your order will arrive in <strong>${c}</strong> within 3–5 days.</p><div class="order-id">Order ID: ${oid}</div><p style="font-size:.83rem;color:var(--txt-s);margin-bottom:26px">Confirmation via WhatsApp at <strong>${w}</strong> · <strong style="color:var(--blue)">${selPay.toUpperCase()}</strong></p><button class="btn-prim" onclick="closeCO();goPage('home');clearCart()">Continue Shopping →</button></div>`;
       if (coMode === 'cart') { cart = []; saveCart(); updCount(); }
     }
@@ -2608,17 +2622,39 @@
     });
 
     // ─── INIT ───
-    function init() {
-      const vis = parseInt(localStorage.getItem('ps_visitors') || '0') + 1;
-      localStorage.setItem('ps_visitors', vis);
-      const stored = localStorage.getItem('ps_products');
-      prods = stored ? JSON.parse(stored) : DEFAULT_PRODS;
+    function renderAll() {
       renderGrid(document.getElementById('clothingGrid'), prods.filter(p => p.cat === 'clothing'));
       renderGrid(document.getElementById('beautyGrid'), prods.filter(p => p.cat === 'beauty'));
       renderGrid(document.getElementById('perfumeGrid'), prods.filter(p => p.cat === 'perfumes'));
       renderGrid(document.getElementById('featuredGrid'), prods.slice(0, 6));
       updCount();
       renderAllFooters();
+    }
+
+    function init() {
+      // Track visitors
+      const vis = parseInt(localStorage.getItem('ps_visitors') || '0') + 1;
+      localStorage.setItem('ps_visitors', vis);
+
+      // Load from API, fall back to DEFAULT_PRODS if unavailable
+      fetch("http://localhost:5000/api/products")
+        .then(res => {
+          if (!res.ok) throw new Error('API not OK');
+          return res.json();
+        })
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            prods = data;
+          } else {
+            prods = DEFAULT_PRODS;
+          }
+          renderAll();
+        })
+        .catch(() => {
+          // Backend offline — use built-in demo products
+          prods = DEFAULT_PRODS;
+          renderAll();
+        });
     }
     init();
   </script>
